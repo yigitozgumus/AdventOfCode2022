@@ -21,11 +21,11 @@ class Day1: SolutionData(inputFile = "inputs/day1.txt") {
 
 
 fun Day1.solvePart1() {
-	val listOfSums = processedData.map { it.map { it -> it.toInt() }.sum() }
+	val listOfSums = processedData.map { it.sumOf { item -> item.toInt() } }
 	println(listOfSums.max())
 }
 
 fun Day1.solvePart2() {
-	val listOfSums = processedData.map { it.map { it -> it.toInt() }.sum() }
+	val listOfSums = processedData.map { it.sumOf { item -> item.toInt() } }
 	println(listOfSums.sortedDescending().take(3).sum())
 }
