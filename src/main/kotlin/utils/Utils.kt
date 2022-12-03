@@ -30,4 +30,14 @@ object Utils {
 	}
 
 	// endregion
+
+	// region Day3
+
+	fun getPriority(value: Char): Int {
+		return if(value.isUpperCase()) {
+			value.code - 38
+		} else {
+			value.code - 96
+		}
+	}
 }
