@@ -40,4 +40,6 @@ object Utils {
 			value.code - 96
 		}
 	}
+
+	// endregion
 }
