@@ -2,13 +2,6 @@ package days
 
 import utils.SolutionData
 
-fun solveDay1() {
-	Day1().run {
-		solvePart1()
-		solvePart2()
-	}
-}
-
 class Day1: SolutionData(inputFile = "inputs/day1.txt") {
 	val processedData = rawData.flatMapIndexed { index: Int, s: String ->
 		when {
