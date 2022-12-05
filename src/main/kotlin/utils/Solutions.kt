@@ -26,8 +26,8 @@ object Solutions {
 	solvePart2()
   }
 
-	fun solveDay5() = with(Day5Data()) {
-		solvePart1()
-		solvePart2()
+	fun solveDay5() {
+		Day5Data().solvePart1()
+		Day5Data().solvePart2()
 	}
 }
