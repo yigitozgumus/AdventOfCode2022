@@ -1,6 +1,7 @@
 package utils
 
 import days.*
+import days.Day6Data
 
 object Solutions {
 
@@ -29,5 +30,10 @@ object Solutions {
 	fun solveDay5() {
 		Day5Data().solvePart1()
 		Day5Data().solvePart2()
+	}
+
+	fun solveDay6() {
+		Day6Data().solvePart1()
+		Day6Data().solvePart2()
 	}
 }

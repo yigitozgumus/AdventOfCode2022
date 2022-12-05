@@ -3,6 +3,6 @@ import utils.Solutions.solveDay3
 
 fun main() {
 	with(Solutions) {
-		solveDay5()
+		solveDay6()
 	}
 }
