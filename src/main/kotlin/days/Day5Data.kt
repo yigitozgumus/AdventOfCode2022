@@ -3,6 +3,11 @@ package days
 import utils.SolutionData
 import java.util.*
 
+fun main() {
+	Day5Data().solvePart1()
+	Day5Data().solvePart2()
+}
+
 data class Operation(val times: Int, val from: Int, val to: Int)
 
 class Day5Data : SolutionData(inputFile = "inputs/day5.txt") {

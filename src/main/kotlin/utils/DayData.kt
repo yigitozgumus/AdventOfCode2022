@@ -1,10 +1,9 @@
 package utils
 
-fun solveDay() = with(DayData()) {
+fun main() = with(DayData()) {
   solvePart1()
   solvePart2()
 }
-
 
 class DayData: SolutionData(inputFile = "inputs/")
 

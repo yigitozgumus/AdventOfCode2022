@@ -2,6 +2,11 @@ package days
 
 import utils.SolutionData
 
+fun main() {
+	Day6Data().solvePart1()
+	Day6Data().solvePart2()
+}
+
 class Day6Data: SolutionData(inputFile = "inputs/day6.txt") {
 	val processed = rawData.first()
 }
@@ -19,3 +24,4 @@ fun Day6Data.solvePart2() {
 		.indexOfFirst { it.toSet().size == 14 }
 		.also { println(it + 14) }
 }
+

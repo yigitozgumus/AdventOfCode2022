@@ -2,6 +2,10 @@ package days
 
 import utils.SolutionData
 
+fun main() = with(Day4Data()) {
+	solvePart1()
+	solvePart2()
+}
 
 class Day4Data : SolutionData(inputFile = "inputs/day4.txt") {
   val part1Data = rawData.map { it.split(",").map { it.split("-").map { it.toInt() } } }
