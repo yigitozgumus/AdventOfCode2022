@@ -9,7 +9,10 @@ fun main() = with(Day7Data()) {
 }
 
 sealed interface FileSystem {
-	data class Dir(val name: String, val contents: MutableList<FileSystem> = mutableListOf()): FileSystem
+	data class Dir(
+		val name: String,
+		val contents: MutableList<FileSystem> = mutableListOf()
+	): FileSystem
 	data class File(val name: String, val size: Int): FileSystem
 }
 
