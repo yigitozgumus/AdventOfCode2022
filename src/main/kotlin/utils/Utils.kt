@@ -1,5 +1,8 @@
 package utils
 
+import days.Item
+import days.Monkey
+
 object Utils {
 	// region day 2
 	fun calculateScore(input: String): Int {
@@ -42,4 +45,60 @@ object Utils {
 	}
 
 	// endregion
+
+  	// region Day 11
+
+  	fun createPart1Monkey(list: List<String>): Monkey {
+		val index = list.first().trimEnd(':').split(" ").last().toInt()
+	  	val items = list[1].split(":").last().split(',').map { it.trim() }.map { Item(it.toLong()) }.toMutableList()
+	  	val operationString = list[2].split('=').last()
+	  	val opNumber = operationString.split(' ').last()
+	  	val isSelf = opNumber.contains("old")
+	  	val operation = when {
+			operationString.contains("*") && isSelf -> { {item: Item -> item * item.worry} }
+		  	operationString.contains("*") -> { {item: Item -> item * opNumber.toLong()} }
+		  	operationString.contains("+") && isSelf -> { {item: Item -> item + item.worry} }
+		  	operationString.contains("+") -> { {item: Item -> item + opNumber.toLong()} }
+		  	else -> {item: Item -> item}
+		  }
+	  	val testNumber = list[3].split(' ').last().toInt()
+		val trueMonkeyIndex = list[4].split(' ').last().toInt()
+	  	val falseMonkeyIndex = list[5].split(' ').last().toInt()
+	  	val test = {item: Item -> if (item.worry % testNumber == 0L) trueMonkeyIndex else falseMonkeyIndex }
+	  	return Monkey(
+			index = index,
+			items = items,
+			inspect = operation,
+			test = test,
+			testNumber = testNumber.toLong()
+		  )
+	  }
+
+  fun createPart2Monkey(list: List<String>): Monkey {
+	val index = list.first().trimEnd(':').split(" ").last().toInt()
+	val items = list[1].split(":").last().split(',').map { it.trim() }.map { Item(it.toLong(), part1 = false) }.toMutableList()
+	val operationString = list[2].split('=').last()
+	val opNumber = operationString.split(' ').last()
+	val isSelf = opNumber.contains("old")
+	val operation = when {
+	  operationString.contains("*") && isSelf -> { {item: Item -> item * item.worry} }
+	  operationString.contains("*") -> { {item: Item -> item * opNumber.toLong()} }
+	  operationString.contains("+") && isSelf -> { {item: Item -> item + item.worry} }
+	  operationString.contains("+") -> { {item: Item -> item + opNumber.toLong()} }
+	  else -> { item: Item -> item }
+	}
+	val testNumber = list[3].split(' ').last().toInt()
+	val trueMonkeyIndex = list[4].split(' ').last().toInt()
+	val falseMonkeyIndex = list[5].split(' ').last().toInt()
+	val test = {item: Item -> if (item.worry % testNumber == 0L) trueMonkeyIndex else falseMonkeyIndex }
+	return Monkey(
+	  index = index,
+	  items = items,
+	  inspect = operation,
+	  test = test,
+	  testNumber = testNumber.toLong()
+	)
+  }
+
+  	// endregion
 }
