@@ -41,14 +41,14 @@ class Day11Data : SolutionData(inputFile = "inputs/day11.txt") {
 fun Day11Data.solvePart1() {
   repeat(20) {
 	part1MonkeyList.forEach { monkey ->
-	  val sendMap: MutableList<Pair<Item, Int>> = mutableListOf<Pair<Item, Int>>()
+	  val sendList = mutableListOf<Pair<Item, Int>>()
 	  monkey.items.forEach { item ->
 		monkey.inspect(item)
 		val monkeyToSend = monkey.test(item)
-		sendMap.add(item to monkeyToSend)
+		sendList.add(item to monkeyToSend)
 	  }
 	  monkey.inspectTimes += monkey.items.size
-	  sendMap.forEach { (item, monkeyIndex) ->
+	  sendList.forEach { (item, monkeyIndex) ->
 		part1MonkeyList[monkeyIndex].items.add(item)
 	  }
 	  monkey.items.clear()
@@ -63,15 +63,15 @@ fun Day11Data.solvePart2() {
   val totalModulo = part2MonkeyList.map { it.testNumber }.reduce { acc, l -> acc * l }
   repeat(10_000) {
 	part2MonkeyList.forEach { monkey ->
-	  val sendMap: MutableList<Pair<Item, Int>> = mutableListOf<Pair<Item, Int>>()
+	  val sendList = mutableListOf<Pair<Item, Int>>()
 	  monkey.items.forEach { item ->
 		monkey.inspect(item)
 		val monkeyToSend = monkey.test(item)
 		val itemWithUpdatedWorry = item.copy(worry = item.worry % totalModulo)
-		sendMap.add(itemWithUpdatedWorry to monkeyToSend)
+		sendList.add(itemWithUpdatedWorry to monkeyToSend)
 	  }
 	  monkey.inspectTimes += monkey.items.size
-	  sendMap.forEach { (item, monkeyIndex) ->
+	  sendList.forEach { (item, monkeyIndex) ->
 		part2MonkeyList[monkeyIndex].items.add(item)
 	  }
 	  monkey.items.clear()
