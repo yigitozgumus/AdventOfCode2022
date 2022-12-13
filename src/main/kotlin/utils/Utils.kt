@@ -51,7 +51,7 @@ object Utils {
 
   // region Day 11
 
-  fun createPart1Monkey(list: List<String>): Monkey {
+  fun createPart1Monkey(list: kotlin.collections.List<String>): Monkey {
 	val index = list.first().trimEnd(':').split(" ").last().toInt()
 	val items = list[1].split(":").last().split(',').map { it.trim() }.map { Item(it.toLong()) }.toMutableList()
 	val operationString = list[2].split('=').last()
@@ -89,7 +89,7 @@ object Utils {
 	)
   }
 
-  fun createPart2Monkey(list: List<String>): Monkey {
+  fun createPart2Monkey(list: kotlin.collections.List<String>): Monkey {
 	val index = list.first().trimEnd(':').split(" ").last().toInt()
 	val items =
 	  list[1].split(":").last().split(',').map { it.trim() }.map { Item(it.toLong(), part1 = false) }.toMutableList()
@@ -133,7 +133,7 @@ object Utils {
   // region Day 12
 
 
-  fun Day12Data.getNeighbors(curr: Point): List<Point> = buildList {
+  fun Day12Data.getNeighbors(curr: Point): kotlin.collections.List<Point> = buildList {
 	if (curr.x > 0) {
 	  val element = getElement(curr.x -1,curr.y)
 	  if (element.getFilteredValue() - curr.getFilteredValue() <= 1) add(element)
@@ -152,6 +152,68 @@ object Utils {
 	}
   }
 
+
+  // endregion
+
+  // region day 13
+  
+  sealed class Packet {
+	abstract infix fun compareTo(other: Packet): Int
+
+	companion object {
+	  fun from(definition: String): Packet = definition
+		.toIntOrNull().takeIf { it is Int }
+		?.let { Number(it) } ?: List.from(definition)
+	}
+  }
+
+  private data class Number(val value: Int) : Packet() {
+	override infix fun compareTo(other: Packet): Int = when (other) {
+		is Number -> when {
+		  value < other.value -> -1
+		  value > other.value -> 1
+		  else -> 0
+		}
+		is List -> List(listOf(this)) compareTo other
+	}
+  }
+
+  data class List(val children: kotlin.collections.List<Packet>) : Packet() {
+	override infix fun compareTo(other: Packet): Int = when (other) {
+		is Number -> this compareTo List(listOf(other))
+		is List -> {
+		  children.zip(other.children)
+			.map { it.first compareTo it.second }
+			.filterNot { it == 0 }
+			.firstOrNull() ?: (children.size compareTo other.children.size)
+		}
+	}
+
+	companion object {
+	  fun from(definition: String): List {
+		val inside = definition.drop(1).dropLast(1)
+		if (inside.isEmpty()) return List(emptyList())
+
+		val children = buildList {
+		  var current = ""
+		  var brackets = 0
+		  for (c in inside) {
+			if (c == '[') brackets++
+			if (c == ']') brackets--
+			if (c == ',' && brackets == 0) {
+			  add(Packet.from(current))
+			  current = ""
+			  continue
+			}
+			current += c
+		  }
+		  add(Packet.from(current))
+		}
+
+		return List(children)
+	  }
+	}
+  }
 
   // endregion
 }
